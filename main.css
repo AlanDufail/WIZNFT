@@ -1,0 +1,46 @@
+:root{
+
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: auto;
+}
+
+.nav{
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.shopping_cart{
+    width: 36px;
+    height: 36px;
+}
+
+.pages{
+    display:flex;
+    margin:10px 30px;
+    align-items: center;
+    justify-content: center;
+    color:white;
+}
+
+.page{
+    padding:20px;
+    cursor:pointer;
+}
+
+.page.disabled{
+    cursor:not-allowed;
+    color:grey;
+}
+
+.current{
+    padding: 10px 20px;
+    border-radius: 25%;
+    border: 5px solid whitesmoke;
+    font-size: 20px;
+    font-weight: 600;
+}
