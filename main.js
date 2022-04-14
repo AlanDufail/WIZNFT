@@ -1,13 +1,15 @@
 //const def
 const URLS = {
-  NEW_URL: "https://awesome-nft-app.herokuapp.com/",
+  BASE_URL: "https://awesome-nft-app.herokuapp.com/",
 };
+const filterSelect = ["FILTER","CREATOR","FAVORITE",""];
 
 const content = document.querySelector(".content");
 const search = document.querySelector(".search");
 const previous = document.querySelector("#prev");
 const next = document.querySelector("#next");
 const current = document.querySelector("#current");
+const filter = document.querySelector
 const form = document.querySelector(".form");
 
 //variable def
@@ -16,6 +18,8 @@ let nextPage = 2;
 let prevPage = 3;
 let totalPages = 5;
 let queryUrl = "";
+
+
 
 async function getNFT(url){
   return new Promise(async (success, failed) => {
@@ -40,8 +44,8 @@ function displayNFT(data) {
     nftElm.classList.add("nft");
     nftElm.innerHTML = `
            <img src="${image_url}" alt="${name}">
-
-          <div class="nft">
+           
+          <div class="nft-info">
               <h3>${name}</h3>
               <span class="${updateSalesColor(sales)}">${sales}</span>
           </div>
@@ -108,7 +112,7 @@ function filterByCreator(data){
 }
 
 async function initSite() {
-  let myData = await getNFT(URLS.NEW_URL);
+  let myData = await getNFT(URLS.BASE_URL);
   console.log(myData)
   filterByCreator(myData);
 }

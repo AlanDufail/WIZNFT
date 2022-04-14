@@ -14,9 +14,16 @@ body{
     margin-right: 20%;
 }
 
-.shopping_cart{
+.shopping_cart, .search, .favorite{
     width: 36px;
     height: 36px;
+    fill: white;
+}
+
+.content{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .pages{
@@ -43,4 +50,63 @@ body{
     border: 5px solid whitesmoke;
     font-size: 20px;
     font-weight: 600;
+}
+
+
+.nft {
+    width: 300px;
+    margin: 1rem;
+    border-radius: 3px;
+    box-shadow: 0.2px 4px 5px rgba(0,0,0,0.1);
+    background-color: var(--secondary-color);
+    position:relative;
+    overflow: hidden;
+}
+
+
+.nft img{
+    width:100%;
+}
+
+.nft-info{
+    color:#eee;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem 1rem;
+    letter-spacing: 0.5px;
+}
+
+.nft-info span{
+    background-color: var(--primary-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.nft-info span.green{
+    color:lightgreen;
+}
+
+.nft-info span.orange{
+    color:orange;
+}
+
+.nft-info span.red{
+    color:red;
+}
+
+.desc{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: #fff;
+    padding: 1rem;
+    max-height: 100%;
+    transform:translateY(101%);
+    transition:transform 0.3s ease-in;
+}
+
+.nft:hover .desc{
+    transform:translateY(0)
 }
