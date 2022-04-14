@@ -57,22 +57,25 @@ let queryUrl = "";
 // }
 
 async function getNFT(url){
-  await fetch("https://awesome-nft-app.herokuapp.com/") //1
+  await fetch(url) //1
   .then((response) => response.json()) //2
   .then((data) => {
     console.log(data.assets); //3
-    if(data.assets !==0){
-      console.log('ici')
+    return data;
+    if(data.assets !== 0){
+      console.log('ici');
+      displayNFT(data.assets);
     }
   });
 }
 
 function displayNFT(data) {
-  content.innerHTML = "";
+  //content.innerHTML = "";
 
   data.forEach((nft) => {
     const { name, description, image_url, sales, id } = nft;
     const nftElm = document.createElement("div");
+    console.log(nftElm);
     nftElm.classList.add("nft");
     nftElm.innerHTML = `
            <img src="${image_url}" alt="${name}">
