@@ -57,16 +57,17 @@ let queryUrl = "";
 // }
 
 async function getNFT(url){
-  await fetch(url) //1
-  .then((response) => response.json()) //2
-  .then((data) => {
-    console.log(data.assets); //3
-    return data;
-    if(data.assets !== 0){
-      console.log('ici');
-      displayNFT(data.assets);
-    }
-  });
+  return new Promise(async (success, failed) => {
+    await fetch(url) //1
+    .then((response) => response.json()) //2
+    .then((data) => {
+      success(data.assets)
+      if(data.assets !== 0){
+        console.log('ici');
+        displayNFT(data.assets);
+      }
+    });
+  })
 }
 
 function displayNFT(data) {
@@ -143,7 +144,12 @@ next.addEventListener('click', () => {
 
 //init site
 
-function initSite() {
-  getNFT(URLS.NEW_URL);
+function filterByCreator(data){
+}
+
+async function initSite() {
+  let myData = await getNFT(URLS.NEW_URL);
+  console.log(myData)
+  filterByCreator(myData);
 }
 window.addEventListener("DOMContentLoaded", initSite);
