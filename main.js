@@ -24,7 +24,6 @@ async function getNFT(url){
     .then((data) => {
       success(data.assets)
       if(data.assets !== 0){
-        console.log('ici');
         displayNFT(data.assets);
       }
     });
@@ -32,11 +31,9 @@ async function getNFT(url){
 }
 
 function displayNFT(data) {
-  console.log(data);
   data.forEach((nft) => {
     const { name, description, image_url, sales, id } = nft;
     const nftElm = document.createElement("div");
-    console.log(nftElm);
     nftElm.classList.add("nft");
     nftElm.innerHTML = `
            <img src="${image_url}" alt="${name}">
@@ -104,12 +101,21 @@ next.addEventListener('click', () => {
 
 //init site
 
-function filterByCreator(data){
+async function filterByCreator(){
+  let input = document.getElementById('searchbar').value
+  input=input.toLowerCase();
+  let myData = await getNFT(URLS.NEW_URL);
+  for (i = 0; i < myData.length; i++ ) {
+    if (!myData[i].creator.username.toLowerCase().includes(input)) {
+      //display none
+    } else {
+      console.log(myData[i])
+    }
+  }
 }
 
 async function initSite() {
   let myData = await getNFT(URLS.NEW_URL);
-  console.log(myData)
   filterByCreator(myData);
 }
 window.addEventListener("DOMContentLoaded", initSite);
