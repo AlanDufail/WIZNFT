@@ -104,27 +104,26 @@ next.addEventListener('click', () => {
 async function filterByCreator(){
   let valeurSearch = []
   let input = document.getElementById('searchbar').value
-  input=input.toLowerCase();
-  let myData = await getNFT(`https://awesome-nft-app.herokuapp.com/search?q=${input}`);
-  for (i = 0; i < myData.length; i++ ) {
-    if (!myData[i].creator.username.toLowerCase().includes(input)) {
-      //display none
-    } else {
-      // console.log(myData[i])
-      valeurSearch.push(myData[i])
+    input=input.toLowerCase();
+    let myData = await getNFT(`https://awesome-nft-app.herokuapp.com/search?q=${input}`);
+    for (i = 0; i < myData.length; i++ ) {
+      if (!myData[i].creator.username.toLowerCase().includes(input)) {
+        //display none
+      } else {
+        // console.log(myData[i])
+        valeurSearch.push(myData[i])
+      }
     }
-  }
-  await deleteNft()
-  displayNFT(valeurSearch)
+    console.log(valeurSearch)
+    deleteNft()
+    await displayNFT(valeurSearch)
 }
 
 function deleteNft(){
-  const allNft = document.querySelectorAll('nft');
-  console.log(allNft)
-  for(i = 0; i <= allNft.length; i++) {
-
-    allNft[i].remove()
-  }
+  const allNfts = document.querySelectorAll('.nft');
+  allNfts.forEach(nft => {
+     nft.remove();
+  });
 }
 async function initSite() {
   let myData = await getNFT(URLS.NEW_URL);
