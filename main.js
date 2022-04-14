@@ -1,24 +1,7 @@
 //const def
-const API_TOKEN = "NGVkN2E4MjYtYWY2Ni00ODY5LTk2NjgtMzY3MTFlMGJkY2Mz";
 const URLS = {
-  BASE_URL: "https://api.m3o.com/",
-  NFT_URL: "v1/nft/Assets",
-};
 
-const headers = new Headers();
-headers.append("Autorization", `Bearer ${API_TOKEN}`);
-const formData = new FormData();
-formData.append(
-  "contract_address",
-  "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb"
-);
-formData.append("Content-type", "application/json");
-formData.append("token_id", "1");
-const optionRequest = {
-  method: "POST",
-  mode: "cors",
-  body: formData,
-  headers: headers,
+  NEW_URL: "https://awesome-nft-app.herokuapp.com/",
 };
 
 const content = document.querySelector("#content");
@@ -36,16 +19,18 @@ let totalPages = 100;
 let queryUrl = "";
 
 async function getNFT(url) {
-  await fetch(url, optionRequest)
+  await fetch(url)
     .then((res) => {
       if (res.ok) {
         console.log(res.json());
+      }else{
+        console.log('ici');
       }
     })
     .then((data) => {
-      console.log(data.results);
-      if (data.results.length !== 0) {
-        displayNFT(data.results);
+      console.log(data.assets);
+      if (data.assets.length !== 0) {
+        displayNFT(data.assets);
         currentPage = data.page;
         nextPage = currentPage + 1;
         prevPage = currentPage - 1;
@@ -69,6 +54,14 @@ async function getNFT(url) {
         content.innerHTML = `<h1 class="no-results">No Results Found</h1>`;
       }
     });
+}
+
+async function test(){
+  await fetch("https://awesome-nft-app.herokuapp.com/") //1
+  .then((response) => response.json()) //2
+  .then((data) => {
+    console.log(data.assets); //3
+  });
 }
 
 function displayNFT(data) {
@@ -122,15 +115,15 @@ function pageCall(page){
   }
 }
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const mySearch = search.value;
-  if (mySearch) {
-    getNFT(URLS.BASE_URL + NFT_URL +"&query=" + mySearch);
-  } else {
-    getNFT(URLS.BASE_URL + NFT_URL);
-  }
-});
+// form.addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   const mySearch = search.value;
+//   if (mySearch) {
+//     getNFT(URLS.BASE_URL + NFT_URL +"&query=" + mySearch);
+//   } else {
+//     getNFT(URLS.BASE_URL + NFT_URL);
+//   }
+// });
 prev.addEventListener('click', () => {
   if(prevPage > 0){
     pageCall(prevPage);
@@ -145,6 +138,6 @@ next.addEventListener('click', () => {
 //init site
 
 function initSite() {
-  getNFT();
+  getNFT(URLS.NEW_URL);
 }
 window.addEventListener("DOMContentLoaded", initSite);
