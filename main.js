@@ -18,49 +18,52 @@ let prevPage = 3;
 let totalPages = 100;
 let queryUrl = "";
 
-async function getNFT(url) {
-  await fetch(url)
-    .then((res) => {
-      if (res.ok) {
-        console.log(res.json());
-      }else{
-        console.log('ici');
-      }
-    })
-    .then((data) => {
-      console.log(data.assets);
-      if (data.assets.length !== 0) {
-        displayNFT(data.assets);
-        currentPage = data.page;
-        nextPage = currentPage + 1;
-        prevPage = currentPage - 1;
-        totalPages = data.total_pages;
+// async function getNFT(url) {
+//   await fetch(url)
+//     .then((res) => {
+//       if (res.ok) {
+//         console.log(res.json());
+//       }else{
+//         console.log('ici');
+//       }
+//     })
+//     .then((data) => {
+//       console.log(data.assets);
+//       if (data.assets.length !== 0) {
+//         displayNFT(data.assets);
+//         currentPage = data.page;
+//         nextPage = currentPage + 1;
+//         prevPage = currentPage - 1;
+//         totalPages = data.total_pages;
 
-        current.innerText = currentPage;
+//         current.innerText = currentPage;
 
-        if (currentPage <= 1) {
-          prev.classList.add("disabled");
-          next.classList.remove("disabled");
-        } else if (currentPage >= totalPages) {
-          prev.classList.remove("disabled");
-          next.classList.add("disabled");
-        } else {
-          prev.classList.remove("disabled");
-          next.classList.remove("disabled");
-        }
+//         if (currentPage <= 1) {
+//           prev.classList.add("disabled");
+//           next.classList.remove("disabled");
+//         } else if (currentPage >= totalPages) {
+//           prev.classList.remove("disabled");
+//           next.classList.add("disabled");
+//         } else {
+//           prev.classList.remove("disabled");
+//           next.classList.remove("disabled");
+//         }
 
-        tagsEl.scrollIntoView({ behavior: "smooth" });
-      } else {
-        content.innerHTML = `<h1 class="no-results">No Results Found</h1>`;
-      }
-    });
-}
+//         tagsEl.scrollIntoView({ behavior: "smooth" });
+//       } else {
+//         content.innerHTML = `<h1 class="no-results">No Results Found</h1>`;
+//       }
+//     });
+// }
 
-async function test(){
+async function getNFT(url){
   await fetch("https://awesome-nft-app.herokuapp.com/") //1
   .then((response) => response.json()) //2
   .then((data) => {
     console.log(data.assets); //3
+    if(data.assets !==0){
+      console.log('ici')
+    }
   });
 }
 
