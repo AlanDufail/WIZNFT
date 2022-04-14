@@ -14,7 +14,7 @@ body{
     margin-right: 20%;
 }
 
-.shopping_cart, .search, .favorite{
+.shopping_cart, .favorite{
     width: 36px;
     height: 36px;
     fill: white;
