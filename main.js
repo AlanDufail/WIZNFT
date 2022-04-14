@@ -2,14 +2,28 @@
 const URLS = {
   BASE_URL: "https://awesome-nft-app.herokuapp.com/",
 };
-const filterSelect = ["FILTER","CREATOR","FAVORITE",""];
+const filterSelect = [
+  {
+    "id": "1",
+    "label": "search"
+  },
+  {
+    "id": "2",
+    "label": "creator"
+  },
+  {
+    "id": "3",
+    "label": "collection"
+  }
+
+];
 
 const content = document.querySelector(".content");
 const search = document.querySelector(".search");
 const previous = document.querySelector("#prev");
 const next = document.querySelector("#next");
 const current = document.querySelector("#current");
-const filter = document.querySelector
+const filters = document.querySelector(".filters");
 const form = document.querySelector(".form");
 
 //variable def
@@ -20,6 +34,21 @@ let totalPages = 5;
 let queryUrl = "";
 
 
+function selectFilter(){
+}
+
+function createFilter(){
+  filters.innerHTML = '';
+
+  filterSelect.forEach(filter => {
+    const btn = document.createElement("div");
+    btn.classList.add("btn_filter");
+    btn.id = filter.id;
+    btn.innerText = filter.label;
+    filters.appendChild(btn);
+    // btn.addEventListener('click', )
+  })
+}
 
 async function getNFT(url){
   return new Promise(async (success, failed) => {
@@ -44,10 +73,9 @@ function displayNFT(data) {
     nftElm.classList.add("nft");
     nftElm.innerHTML = `
            <img src="${image_url}" alt="${name}">
-           
           <div class="nft-info">
               <h3>${name}</h3>
-              <span class="${updateSalesColor(sales)}">${sales}</span>
+              <span class="${updateSalesColor(sales)}">Nombre de vente: ${sales}</span>
           </div>
           <div class="desc">
 
@@ -62,7 +90,7 @@ function displayNFT(data) {
 
 
 function updateSalesColor(sales) {
-  if (sales >= 5) {
+  if (sales >= 20) {
     return "red";
   } else {
     return "green";
@@ -113,6 +141,7 @@ function filterByCreator(data){
 
 async function initSite() {
   let myData = await getNFT(URLS.BASE_URL);
+  createFilter();
   console.log(myData)
   filterByCreator(myData);
 }
