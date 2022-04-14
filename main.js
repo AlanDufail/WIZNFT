@@ -1,60 +1,21 @@
 //const def
 const URLS = {
-
   NEW_URL: "https://awesome-nft-app.herokuapp.com/",
 };
 
-const content = document.querySelector("#content");
-const search = document.querySelector("#search");
+const content = document.querySelector(".content");
+const search = document.querySelector(".search");
 const previous = document.querySelector("#prev");
 const next = document.querySelector("#next");
 const current = document.querySelector("#current");
-const form = document.querySelector("#form");
+const form = document.querySelector(".form");
 
 //variable def
 let currentPage = 1;
 let nextPage = 2;
 let prevPage = 3;
-let totalPages = 100;
+let totalPages = 5;
 let queryUrl = "";
-
-// async function getNFT(url) {
-//   await fetch(url)
-//     .then((res) => {
-//       if (res.ok) {
-//         console.log(res.json());
-//       }else{
-//         console.log('ici');
-//       }
-//     })
-//     .then((data) => {
-//       console.log(data.assets);
-//       if (data.assets.length !== 0) {
-//         displayNFT(data.assets);
-//         currentPage = data.page;
-//         nextPage = currentPage + 1;
-//         prevPage = currentPage - 1;
-//         totalPages = data.total_pages;
-
-//         current.innerText = currentPage;
-
-//         if (currentPage <= 1) {
-//           prev.classList.add("disabled");
-//           next.classList.remove("disabled");
-//         } else if (currentPage >= totalPages) {
-//           prev.classList.remove("disabled");
-//           next.classList.add("disabled");
-//         } else {
-//           prev.classList.remove("disabled");
-//           next.classList.remove("disabled");
-//         }
-
-//         tagsEl.scrollIntoView({ behavior: "smooth" });
-//       } else {
-//         content.innerHTML = `<h1 class="no-results">No Results Found</h1>`;
-//       }
-//     });
-// }
 
 async function getNFT(url){
   return new Promise(async (success, failed) => {
@@ -71,8 +32,7 @@ async function getNFT(url){
 }
 
 function displayNFT(data) {
-  //content.innerHTML = "";
-
+  console.log(data);
   data.forEach((nft) => {
     const { name, description, image_url, sales, id } = nft;
     const nftElm = document.createElement("div");
