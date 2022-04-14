@@ -1,14 +1,33 @@
 //const def
 const URLS = {
-  NEW_URL: "https://awesome-nft-app.herokuapp.com/",
+  BASE_URL: "https://awesome-nft-app.herokuapp.com/",
 };
+const filterSelect = [
+  {
+    "id": "1",
+    "label": "search"
+  },
+  {
+    "id": "2",
+    "label": "creator"
+  },
+  {
+    "id": "3",
+    "label": "collection"
+  }
+
+];
 
 const content = document.querySelector(".content");
-const search = document.querySelector(".search");
 const previous = document.querySelector("#prev");
 const next = document.querySelector("#next");
 const current = document.querySelector("#current");
+const filters = document.querySelector(".filters");
 const form = document.querySelector(".form");
+const btn_filter = document.querySelector(".btn_filter");
+const search = document.querySelector(".search");
+
+console.log();
 
 //variable def
 let currentPage = 1;
@@ -16,6 +35,24 @@ let nextPage = 2;
 let prevPage = 3;
 let totalPages = 5;
 let queryUrl = "";
+
+
+function selectFilter(){
+}
+
+function createFilter(){
+  filters.innerHTML = '';
+
+  filterSelect.forEach(filter => {
+    const btn = document.createElement("div");
+    btn.classList.add("btn_filter");
+    btn.id = filter.id;
+    btn.innerText = filter.label;
+    btn.addEventListener("click", addSearchInput);
+    filters.appendChild(btn);
+    // btn.addEventListener('click', )
+  })
+}
 
 async function getNFT(url){
   return new Promise(async (success, failed) => {
@@ -40,10 +77,9 @@ function displayNFT(data) {
     nftElm.classList.add("nft");
     nftElm.innerHTML = `
            <img src="${image_url}" alt="${name}">
-
-          <div class="nft">
+          <div class="nft-info">
               <h3>${name}</h3>
-              <span class="${updateSalesColor(sales)}">${sales}</span>
+              <span class="${updateSalesColor(sales)}">Nombre de vente: ${sales}</span>
           </div>
           <div class="desc">
 
@@ -58,7 +94,7 @@ function displayNFT(data) {
 
 
 function updateSalesColor(sales) {
-  if (sales >= 5) {
+  if (sales >= 20) {
     return "red";
   } else {
     return "green";
@@ -102,14 +138,53 @@ next.addEventListener('click', () => {
   }
 });
 
-//init site
 
-function filterByCreator(data){
+function addSearchInput(){
+  const searchInput = document.createElement("input");
+  searchInput.id = "searchbar";
+  searchInput.name = "search";
+  searchInput.placeholder = "Rechercher par créateur...";
+  search.appendChild(searchInput);
+
+  searchInput.addEventListener("keyup", filterByCreator);
+
+
 }
 
+async function filterByCreator(){
+  let valeurSearch = []
+  let input = document.getElementById('searchbar').value
+    input=input.toLowerCase();
+    let myData = await getNFT(`https://awesome-nft-app.herokuapp.com/search?q=${input}`);
+    for (i = 0; i < myData.length; i++ ) {
+      if (!myData[i].creator.username.toLowerCase().includes(input)) {
+        //display none
+      } else {
+        // console.log(myData[i])
+        valeurSearch.push(myData[i])
+      }
+    }
+    console.log(valeurSearch)
+    deleteNft()
+    await displayNFT(valeurSearch)
+}
+
+function deleteNft(){
+  const allNfts = document.querySelectorAll('.nft');
+  allNfts.forEach(nft => {
+     nft.remove();
+  });
+}
+
+//init site
+
+
+
 async function initSite() {
-  let myData = await getNFT(URLS.NEW_URL);
-  console.log(myData)
+  let myData = await getNFT(URLS.BASE_URL);
+  createFilter();
   filterByCreator(myData);
+
+
 }
 window.addEventListener("DOMContentLoaded", initSite);
