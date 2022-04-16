@@ -1,119 +1,159 @@
 //const def
 const URLS = {
-  BASE_URL: "https://awesome-nft-app.herokuapp.com/",
+  BASE_URL: "https://awesome-nft-app.herokuapp.com/?page=0&sales=false",
+  
 };
-const filterSelect = ["FILTER","CREATOR","FAVORITE",""];
-
+const filterSelect = [
+  {
+    "id": "1",
+    "label": "search"
+  },
+  {
+    "id": "2",
+    "label": "creator"
+  },
+  {
+    "id": "3",
+    "label": "collection"
+  }
+];
 const content = document.querySelector(".content");
-const search = document.querySelector(".search");
 const previous = document.querySelector("#prev");
 const next = document.querySelector("#next");
-const current = document.querySelector("#current");
-const filter = document.querySelector
+const filters = document.querySelector(".filters");
 const form = document.querySelector(".form");
-
+const btn_filter = document.querySelector(".btn_filter");
+const search = document.querySelector(".search");
 //variable def
-let currentPage = 1;
-let nextPage = 2;
-let prevPage = 3;
-let totalPages = 5;
+let currentPage = 0;
+let nextPage = 1;
+let prevPage = -1;
+let totalPages = 20;
 let queryUrl = "";
-
-
-
+function selectFilter(){
+}
+function createFilter(){
+  filters.innerHTML = '';
+  filterSelect.forEach(filter => {
+    const btn = document.createElement("div");
+    btn.classList.add("btn_filter");
+    btn.id = filter.id;
+    btn.innerText = filter.label;
+    btn.addEventListener("click", addSearchInput, {once: true});
+    filters.appendChild(btn);
+    // btn.addEventListener('click', )
+  })
+}
 async function getNFT(url){
+  console.log(url);
   return new Promise(async (success, failed) => {
     await fetch(url) //1
     .then((response) => response.json()) //2
     .then((data) => {
       success(data.assets)
-      if(data.assets !== 0){
-        console.log('ici');
+      if(data.assets.length !== 0){
         displayNFT(data.assets);
+        if(currentPage <= 0){
+          prev.classList.add('disabled');
+          next.classList.remove('disabled')
+        }else if(currentPage >= totalPages){
+          prev.classList.remove('disabled');
+          next.classList.add('disabled')
+        }else{
+          prev.classList.remove('disabled');
+          next.classList.remove('disabled')
+        }
+        filters.scrollIntoView({behavior : 'smooth'});
+      }else{
+        content.innerHTML= `<h1 class="no-results">No Results Found</h1>`
       }
     });
   })
 }
-
 function displayNFT(data) {
-  console.log(data);
   data.forEach((nft) => {
-    const { name, description, image_url, sales, id } = nft;
+    const { name, description, image_url, sales, creator,id } = nft;
     const nftElm = document.createElement("div");
-    console.log(nftElm);
     nftElm.classList.add("nft");
     nftElm.innerHTML = `
-           <img src="${image_url}" alt="${name}">
-           
+           <img src="${image_url? image_url : "./Assets/Image/image_not_found.png"}" alt="${name}">
           <div class="nft-info">
-              <h3>${name}</h3>
-              <span class="${updateSalesColor(sales)}">${sales}</span>
+              <h3>${name? name : "Item no longer available"}</h3>
+              <p>Creator: ${creator.username? creator.username : "unknown"}</p>
+              <span class="${updateSalesColor(sales)}">Nombre de vente: ${sales}</span>
           </div>
           <div class="desc">
-
               <h3>Description</h3>
-              ${description}
+              ${description? description : "No description available"}
               <br/> 
           </div> `;
     content.appendChild(nftElm);
   });
 }
-
-
-
 function updateSalesColor(sales) {
-  if (sales >= 5) {
+  if (sales >= 20) {
     return "red";
   } else {
     return "green";
   }
 }
-
-function pageCall(page){
-  let splitUrl = queryUrl.split('?');
-  let queryParams = splitUrl[1].split('&');
-  let key = queryParams[queryParams.length -1].split('=');
-  if(key[0] != 'page'){
-    let url = queryUrl + '&page='+page
-    displayNFT(url);
-  }else{
-    key[1] = page.toString();
-    let a = key.join('=');
-    queryParams[queryParams.length -1] = a;
-    let b = queryParams.join('&');
-    let url = splitUrl[0] +'?'+ b
-    displayNFT(url);
-  }
+function addSearchInput(){
+  const searchInput = document.createElement("input");
+  searchInput.id = "searchbar";
+  searchInput.name = "search";
+  searchInput.placeholder = "Rechercher par créateur...";
+  search.appendChild(searchInput);
+  searchInput.addEventListener("keyup", filterByCreator);
 }
-
-// form.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   const mySearch = search.value;
-//   if (mySearch) {
-//     getNFT(URLS.BASE_URL + NFT_URL +"&query=" + mySearch);
-//   } else {
-//     getNFT(URLS.BASE_URL + NFT_URL);
-//   }
-// });
-prev.addEventListener('click', () => {
-  if(prevPage > 0){
-    pageCall(prevPage);
+async function filterByCreator(){
+  let valeurSearch = []
+  let input = document.getElementById('searchbar').value
+    input=input.toLowerCase();
+    let myData = await getNFT(`https://awesome-nft-app.herokuapp.com/search?q=${input}`);
+    for (i = 0; i < myData.length; i++ ) {
+      if (!myData[i].creator.username.toLowerCase().includes(input)) {
+        //display none
+      } else {
+        valeurSearch.push(myData[i])
+      }
+    }
+    deleteNft()
+    await displayNFT(valeurSearch)
+}
+async function selectPage(page){
+  console.log(page);
+  deleteNft();
+  await getNFT(`https://awesome-nft-app.herokuapp.com/?page=${page}&sales=false`);
+}
+function deleteNft(){
+  const allNfts = document.querySelectorAll('.nft');
+  allNfts.forEach(nft => {
+     nft.remove();
+  });
+}
+function onClick(id, callback) {
+  document.getElementById(id).addEventListener("click", callback);
+}
+previous.addEventListener('click', () => {
+  if(prevPage >= 0){
+    prevPage -= 1;
+    nextPage -= 1;
+    currentPage -= 1;
+    selectPage(currentPage);
   }
 });
 next.addEventListener('click', () => {
   if(nextPage <= totalPages){
-    pageCall(nextPage);
+    prevPage += 1;
+    nextPage += 1;
+    currentPage += 1;
+    selectPage(currentPage);
   }
 });
-
 //init site
-
-function filterByCreator(data){
-}
-
 async function initSite() {
   let myData = await getNFT(URLS.BASE_URL);
-  console.log(myData)
+  createFilter();
   filterByCreator(myData);
 }
 window.addEventListener("DOMContentLoaded", initSite);

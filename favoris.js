@@ -1,15 +1,29 @@
 const fav = document.querySelector(".fav");
 
 
-let object = {
-    id      : 385541178,
-    desc    : `dventurers are the second NFT collection from Legend Maps, representing a rogue's gallery of playable characters ready to delve into the dungeons represented by the Founder Maps, vanquish the dwellers and other dangers within, and emerge victorious with the loot... or die trying! Each Adventurer will have unique combinations of traits & abilities that will impact gameplay, and which are captured in the metadata. Learn more at [legendmaps.io](http://legendmaps.io/)`, 
-    img_url : `https://lh3.googleusercontent.com/PX0e1jJgLWMJfqvhYAdTKW_4mydaXZ09LcpmGauD_yW5qOsOUdtHyYhVZqFOtL5ssmAuLaxOo2bOs6DZ_C4mSY_1z9Nw1S54jJp1`,
-    name    : `Legend Maps Adventurer #2963`,
-    sales   : 0
-};
+// let object = {
+//     id      : 385541178,
+//     desc    : `dventurers are the second NFT collection from Legend Maps, representing a rogue's gallery of playable characters ready to delve into the dungeons represented by the Founder Maps, vanquish the dwellers and other dangers within, and emerge victorious with the loot... or die trying! Each Adventurer will have unique combinations of traits & abilities that will impact gameplay, and which are captured in the metadata. Learn more at [legendmaps.io](http://legendmaps.io/)`, 
+//     img_url : `https://lh3.googleusercontent.com/PX0e1jJgLWMJfqvhYAdTKW_4mydaXZ09LcpmGauD_yW5qOsOUdtHyYhVZqFOtL5ssmAuLaxOo2bOs6DZ_C4mSY_1z9Nw1S54jJp1`,
+//     name    : `Legend Maps Adventurer #2963`,
+//     sales   : 0
+// };
 
-localStorage.setItem('1', JSON.stringify(object));
+// localStorage.setItem('1', JSON.stringify(object));
+
+
+function setLocalStorage(name, description, image_url, sales, id){
+  console.log('hello')
+    // let object = {
+    //     name    : name,
+    //     desc    : description, 
+    //     img_url : image_url,
+    //     sales   : sales,
+    //     id      : id
+    // };
+    
+    // localStorage.setItem(nft, JSON.stringify(object));
+}
 
 
 function getLocalStorage(){
@@ -23,10 +37,7 @@ function getLocalStorage(){
 }
 
 function deleteLocalStorage(){
-    // let mydata = JSON.parse(localStorage.getItem(key));
-    // let nft = document.querySelector(".nft");
-    // console.log(nft);
-    // localStorage.removeItem();
+
 }
 
 deleteLocalStorage();
