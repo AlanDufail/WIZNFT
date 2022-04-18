@@ -252,5 +252,7 @@ async function initSite() {
   let myData = await getNFT(URLS.BASE_URL);
   createFilter();
   filterByCreator(myData);
+
+
 }
 window.addEventListener("DOMContentLoaded", initSite);
