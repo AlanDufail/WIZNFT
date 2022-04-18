@@ -1,5 +1,10 @@
-:root{
+/* import section */
+@import "favorite.css";
+@import "overlay.css";
 
+:root{
+    --primary-color:#22254b;
+    --secondary-color: #111327;
 }
 
 body{
@@ -96,6 +101,7 @@ body{
 
 .nft-info h3{
     margin-top: revert;
+    margin-bottom: 8px;
     font-size: medium;
     text-align: center;
 }
@@ -123,10 +129,25 @@ body{
     right:0;
     bottom:0;
     background-color: #fff;
-    padding: 1rem;
-    max-height: 100%;
+    padding: 1.5rem;
+    max-height: 50%;
     transform:translateY(100%);
     transition:transform 0.3s ease-in;
+}
+
+.desc h4 + p {
+    color:#11191f;
+    margin-bottom: 8px;
+}
+
+.show-more{
+    background-color: #11191f;
+    color:white;
+    font-size: 16px;
+    font-weight: bold;
+    border:0;
+    border-radius: 50px;
+    padding: 10px 20px;
 }
 
 .nft-info:hover .desc{
