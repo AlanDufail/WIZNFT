@@ -14,11 +14,11 @@ const filterSelect = [
   },
   {
     id: "2",
-    label: "creator",
+    label: "Top creator",
   },
   {
     id: "3",
-    label: "sales",
+    label: "Top sales",
   },
 ];
 
@@ -39,29 +39,7 @@ let totalPages = 20;
 let creator = false;
 let sales = false;
 
-function createFilter() {
-  filters.innerHTML = "";
 
-  filterSelect.forEach((filter) => {
-    const btn = document.createElement("div");
-    btn.id = filter.id;
-    btn.innerText = filter.label;
-    if (filter.id == "1") {
-      btn.classList.add("btn_filter");
-      btn.addEventListener("click", addSearchInput, { once: true });
-    }
-    if (filter.id == "2") {
-      btn.classList.add("btn_filter");
-      btn.addEventListener("click", console.log("Filter by creator"));
-    }
-    if (filter.id == "3") {
-      btn.classList.add("btn_filter");
-      btn.addEventListener("click", filterBySales);
-    }
-    filters.appendChild(btn);
-    // btn.addEventListener('click', )
-  });
-}
 
 async function getNFT(url) {
   lazyLoading();  
@@ -132,25 +110,40 @@ function updateSalesColor(sales) {
   }
 }
 
-function checkDescription(desc){
-  if(desc.length > 100){
-    console.log('ici desc');
-  }else{
-    console.log('non');
-  }
-}
 
+//filter search function
+function createFilter() {
+  filters.innerHTML = "";
+
+  filterSelect.forEach((filter) => {
+    const btn = document.createElement("div");
+    btn.id = filter.id;
+    btn.innerText = filter.label;
+    if (filter.id == "1") {
+      btn.classList.add("btn_filter");
+      btn.addEventListener("click", addSearchInput, { once: true });
+    }
+    if (filter.id == "2") {
+      btn.classList.add("btn_filter");
+      btn.addEventListener("click", console.log("Filter by creator"));
+    }
+    if (filter.id == "3") {
+      btn.classList.add("btn_filter");
+      btn.addEventListener("click", filterBySales);
+    }
+    filters.appendChild(btn);
+    // btn.addEventListener('click', )
+  });
+}
 function addSearchInput() {
   const searchInput = document.createElement("input");
   searchInput.id = "searchbar";
   searchInput.name = "search";
-  searchInput.placeholder = "Rechercher par créateur...";
+  searchInput.placeholder = "Rechercher par nom...";
   search.appendChild(searchInput);
 
   searchInput.addEventListener("keyup", filterByName);
 }
-
-
 async function filterByName() { //search
   let valeurSearch = [];
   let input = document.getElementById("searchbar").value;
@@ -180,10 +173,31 @@ async function filterBySales() {
   );
 }
 
+
+//pagination function
 async function selectPage(page) {
   deleteNft();
   await getNFT(`https://awesome-nft-app.herokuapp.com/?page=${page}`);
 }
+
+previous.addEventListener("click", () => {
+  if (prevPage >= 1) {
+    prevPage -= 1;
+    nextPage -= 1;
+    currentPage -= 1;
+    current.innerHTML = currentPage;
+    selectPage(currentPage);
+  }
+});
+next.addEventListener("click", () => {
+  if (nextPage <= totalPages) {
+    prevPage += 1;
+    nextPage += 1;
+    currentPage += 1;
+    current.innerHTML = currentPage;
+    selectPage(currentPage);
+  }
+});
 
 function deleteNft() {
   const allNfts = document.querySelectorAll(".nft");
@@ -191,6 +205,9 @@ function deleteNft() {
     nft.remove();
   });
 }
+
+
+//overlay function
 const overlayContent = document.querySelector('.overlay-content');
 
 function openOverlay(nft){
@@ -228,8 +245,6 @@ function closeNav() {
 
 
 //lazy loader
-
-
 function lazyLoading() {  
   for (let i=0; i <= 20; i++){
     const nftElm = document.createElement("article");
@@ -255,26 +270,31 @@ function lazyLoading() {
   }
 }
 
+//route function
+// const route = (event) => {
+//   event = event || window.event;
+//   event.preventDefault();
+//   window.history.pushState({}, "", event.target.href);
+//   handleRoute();
+// }
+// const routes = {
+//   "/" : "projet/pages/index.html",
+//   "/shopping": "projet/pages/shopping.html"
+// }
+
+// const handleRoute = async () => {
+//   const path = window.location.pathname;
+//   const route = routes[path];
+//   const html = await fetch(route).then((data) => data.text());
+//   document.querySelector(".wrapper").innerHTML =  html; 
+// };
+
+// window.onpopstate = handleRoute;
+// window.route = route;
+
+// handleRoute();
 
 
-previous.addEventListener("click", () => {
-  if (prevPage >= 1) {
-    prevPage -= 1;
-    nextPage -= 1;
-    currentPage -= 1;
-    current.innerHTML = currentPage;
-    selectPage(currentPage);
-  }
-});
-next.addEventListener("click", () => {
-  if (nextPage <= totalPages) {
-    prevPage += 1;
-    nextPage += 1;
-    currentPage += 1;
-    current.innerHTML = currentPage;
-    selectPage(currentPage);
-  }
-});
 //init site
 
 async function initSite() {
