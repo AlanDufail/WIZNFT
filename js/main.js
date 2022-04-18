@@ -29,6 +29,7 @@ const current = document.querySelector("#current");
 const filters = document.querySelector(".filters");
 const btn_filter = document.querySelector(".btn_filter");
 const search = document.querySelector(".search");
+const nftLoading = document.querySelector(".nft-loading");
 
 //variable def
 let currentPage = 1;
@@ -63,11 +64,13 @@ function createFilter() {
 }
 
 async function getNFT(url) {
-  return new Promise(async (success, failed) => {
+  lazyLoading();  
+  return new Promise(async (success, failed) => { 
     await fetch(url) //1
       .then((response) => response.json()) //2
       .then((data) => {
         success(data.assets);
+        deleteNft();
         if (data.assets.length !== 0) {
           displayNFT(data.assets);
           if (currentPage <= 1) {
@@ -94,14 +97,13 @@ function displayNFT(data) {
     const nftElm = document.createElement("article");
     nftElm.classList.add("nft");
     nftElm.innerHTML = `
-
-           <img class="nft_img"src="${
+           <img class="nft_img loading"src="${
              image_url ? image_url : "./Assets/Image/image_not_found.png"
            }" alt="${name}">
             <div class="nft-info">
-              <h3>${name ? name : "Item no longer available"}</h3>
+              <h3 class="nft-title">${name ? name : "Item no longer available"}</h3>
               <div>
-                <p>Creator: ${creator.username ? creator.username : "unknown"}</p>
+                <p class="nft-creator">Creator: ${creator.username ? creator.username : "unknown"}</p>
                 <span class="${updateSalesColor(sales)}">Sale's  number : ${sales}</span>
               </div>
 
@@ -113,8 +115,6 @@ function displayNFT(data) {
               </div>
           </div>
            `;
-
-
     content.appendChild(nftElm);
     
     document.getElementById(id).addEventListener('click', () => {
@@ -147,11 +147,11 @@ function addSearchInput() {
   searchInput.placeholder = "Rechercher par créateur...";
   search.appendChild(searchInput);
 
-  searchInput.addEventListener("keyup", filterByCreator);
+  searchInput.addEventListener("keyup", filterByName);
 }
 
 
-async function filterByCreator() {
+async function filterByName() { //search
   let valeurSearch = [];
   let input = document.getElementById("searchbar").value;
   input = input.toLowerCase();
@@ -167,6 +167,10 @@ async function filterByCreator() {
   }
   deleteNft();
   await displayNFT(valeurSearch);
+}
+
+async function filterByCreator() {
+//TODO YANIS
 }
 
 async function filterBySales() {
@@ -218,15 +222,40 @@ function openOverlay(nft){
     }
   })
 }
-
 function closeNav() {
   document.querySelector(".overlay").style.width = "0%";
 }
 
 
-function onClick(id, callback) {
-  document.getElementById(id).addEventListener("click", callback);
+//lazy loader
+
+
+function lazyLoading() {  
+  for (let i=0; i <= 20; i++){
+    const nftElm = document.createElement("article");
+    nftElm.classList.add("nft");
+    nftElm.innerHTML = `
+           <img class="nft_img loading"src="" alt="">
+            <div class="nft-info">
+              <h3 class="nft-title loading"></h3>
+              <div>
+                <p class="nft-creator loading"></p>
+                <span class="loading"></span>
+              </div>
+
+              <div class="desc">
+                <h4>Description</h4>
+                <p></p>
+                <br/>
+                <button class="show-more" id="">Show More</button
+              </div>
+          </div>
+           `;
+    content.appendChild(nftElm);
+  }
 }
+
+
 
 previous.addEventListener("click", () => {
   if (prevPage >= 1) {
@@ -251,7 +280,7 @@ next.addEventListener("click", () => {
 async function initSite() {
   let myData = await getNFT(URLS.BASE_URL);
   createFilter();
-  filterByCreator(myData);
+  filterByName(myData);
 
 
 }
