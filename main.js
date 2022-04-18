@@ -70,11 +70,17 @@ async function getNFT(url){
     });
   })
 }
+
+
 function displayNFT(data) {
   data.forEach((nft) => {
     const { name, description, image_url, sales, creator,id } = nft;
     const nftElm = document.createElement("div");
     nftElm.classList.add("nft");
+
+
+
+
     nftElm.innerHTML = `
            <img src="${image_url? image_url : "./Assets/Image/image_not_found.png"}" alt="${name}">
           <div class="nft-info">
@@ -84,10 +90,47 @@ function displayNFT(data) {
           </div>
           <div class="desc">
               <h3>Description</h3>
+              <a id="addFav">Ajouter aux favoris</a>
               ${description? description : "No description available"}
               <br/> 
           </div> `;
     content.appendChild(nftElm);
+
+
+
+
+    let exportFavoris = {
+      name    : name,
+      desc    : description, 
+      img_url : image_url,
+      sales   : sales,
+      id      : id
+  };
+
+
+
+  let addFav = document.getElementById('addFav');
+  
+  addFav.onclick = function() {
+    localStorage.setItem(nft, JSON.stringify(exportFavoris));
+    console.log("Hello");
+}
+
+
+function getLocalStorage(){
+  Object.keys(localStorage).forEach(function(key, value){
+      let mydata = JSON.parse(localStorage.getItem(key));
+      const nftElm = document.createElement("div");
+      nftElm.classList.add("nft");
+      nftElm.innerHTML = `<div style="display : flex; flex-direction :column; align-items : center; width : fit-content; box-sizing : border-box; padding : 16px;" >`+ mydata.id+ `<img src="` + mydata.img_url +`"></img>` + `<a id="addFav">Supprimer des favoris</a></div>`;
+      fav.appendChild(nftElm);
+    getLocalStorage(); 
+  });
+}
+
+console.log(localStorage);
+
+
   });
 }
 function updateSalesColor(sales) {

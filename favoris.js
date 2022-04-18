@@ -1,6 +1,4 @@
 const fav = document.querySelector(".fav");
-
-
 // let object = {
 //     id      : 385541178,
 //     desc    : `dventurers are the second NFT collection from Legend Maps, representing a rogue's gallery of playable characters ready to delve into the dungeons represented by the Founder Maps, vanquish the dwellers and other dangers within, and emerge victorious with the loot... or die trying! Each Adventurer will have unique combinations of traits & abilities that will impact gameplay, and which are captured in the metadata. Learn more at [legendmaps.io](http://legendmaps.io/)`, 
@@ -10,36 +8,42 @@ const fav = document.querySelector(".fav");
 // };
 
 // localStorage.setItem('1', JSON.stringify(object));
+// storage.clear();
 
 
-function setLocalStorage(name, description, image_url, sales, id){
-  console.log('hello')
-    // let object = {
-    //     name    : name,
-    //     desc    : description, 
-    //     img_url : image_url,
-    //     sales   : sales,
-    //     id      : id
-    // };
-    
-    // localStorage.setItem(nft, JSON.stringify(object));
-}
 
+// function setLocalStorage(data){
+//     console.log(exportFavori);
+//     localStorage.setItem(nft, JSON.stringify(object));
+// }
+
+
+
+// let addFav = document.getElementById('addFav');
+// addFav.onclick = function() {
+//   localStorage.setItem(id, JSON.stringify(exportFavoris));
+//   };
 
 function getLocalStorage(){
-    Object.keys(localStorage).forEach(function(key, value){
-        let mydata = JSON.parse(localStorage.getItem(key));
-        const nftElm = document.createElement("div");
-        nftElm.classList.add("nft");
-        nftElm.innerHTML = `<div style="display : flex; flex-direction :column; align-items : center; width : fit-content; box-sizing : border-box; padding : 16px;" >`+ mydata.id+ `<img src="` + mydata.img_url +`"></img>` + `<a onClick=deleteLocalStorage();>Supprimer des favoris</a></div>`;
-        fav.appendChild(nftElm);
-    });
+  Object.keys(localStorage).forEach(function(key, value){
+      let mydata = JSON.parse(localStorage.getItem(key));
+      const nftElm = document.createElement("div");
+      nftElm.classList.add("nft");
+      nftElm.innerHTML = `<div style="display : flex; flex-direction :column; align-items : center; width : fit-content; box-sizing : border-box; padding : 16px;" >`+ mydata.id+ `<img src="` + mydata.img_url +`"></img>` + `<a id="removeFav">Supprimer des favoris</a></div>`;
+      fav.appendChild(nftElm);
+
+  });
 }
+// setLocalStorage();
+getLocalStorage();
 
-function deleteLocalStorage(){
 
-}
 
-deleteLocalStorage();
 
-getLocalStorage(); 
+// deleteLocalStorage();
+
+
+
+
+
+
