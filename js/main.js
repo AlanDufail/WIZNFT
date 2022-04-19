@@ -78,8 +78,8 @@ function displayNFT(data) {
     nftElm.classList.add("nft");
 
     function descSize (word){
-      if (word.length > 110){
-        let wordSlice = word.slice(0, 110);
+      if (word.length > 60){
+        let wordSlice = word.slice(0, 60);
         return wordSlice.concat('...');
     
       }else if(word == ""){
