@@ -5,6 +5,7 @@
 @import "nft.css";
 @import "page.css";
 @import "loading.css";
+@import "panier.css";
 
 :root{
     --primary-color:#22254b;
