@@ -49,7 +49,9 @@ async function getNFT(url) {
       .then((data) => {
         success(data.assets);
         deleteNft();
+        console.log(data.assets.length)
         if (data.assets.length !== 0) {
+          content.innerHTML = '';
           displayNFT(data.assets);
           if (currentPage <= 1) {
             prev.classList.add("disabled");
@@ -159,13 +161,14 @@ function addSearchInput() {
   searchInput.addEventListener("keyup", filterByName);
 }
 async function filterByName() { //search
+  
+  let baseData = await getNFT(URLS.BASE_URL);
   let valeurSearch = [];
   let input = document.getElementById("searchbar").value;
   input = input.toLowerCase();
   let myData = await getNFT(
     `https://awesome-nft-app.herokuapp.com/search?q=${input}`
   );
-  let baseData = await getNFT(URLS.BASE_URL);
   for (i = 0; i < myData.length; i++) {
     if (!myData[i].creator.username.toLowerCase().includes(input)) {
       //display none
@@ -178,7 +181,6 @@ async function filterByName() { //search
     displayNFT(baseData)
   }
   else {
-    console.log("rentre dans le else ")
     deleteNft();
     await displayNFT(valeurSearch);
   }
@@ -234,7 +236,7 @@ const overlayContent = document.querySelector('.overlay-content');
 
 function openOverlay(nft){
   let id = nft.id;
-  console.log('ici');
+
   fetch(`https://awesome-nft-app.herokuapp.com/nft/${id}`)
   .then((response) => response.json())
   .then(nftInfo => {
