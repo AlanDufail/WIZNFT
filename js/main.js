@@ -70,8 +70,6 @@ async function getNFT(url) {
 }
 
 function displayNFT(data) {
-
-
   data.forEach((nft) => {
     const { name, description, image_url, sales, creator, id } = nft;
     const nftElm = document.createElement("article");
@@ -167,6 +165,7 @@ async function filterByName() { //search
   let myData = await getNFT(
     `https://awesome-nft-app.herokuapp.com/search?q=${input}`
   );
+  let baseData = await getNFT(URLS.BASE_URL);
   for (i = 0; i < myData.length; i++) {
     if (!myData[i].creator.username.toLowerCase().includes(input)) {
       //display none
@@ -174,8 +173,15 @@ async function filterByName() { //search
       valeurSearch.push(myData[i]);
     }
   }
-  deleteNft();
-  await displayNFT(valeurSearch);
+  if(input.length == 0){
+    deleteNft();
+    displayNFT(baseData)
+  }
+  else {
+    console.log("rentre dans le else ")
+    deleteNft();
+    await displayNFT(valeurSearch);
+  }
 }
 
 async function filterByCreator() {
@@ -317,7 +323,6 @@ async function initSite() {
   let myData = await getNFT(URLS.BASE_URL);
   createFilter();
   filterByName(myData);
-
 
 }
 window.addEventListener("DOMContentLoaded", initSite);
