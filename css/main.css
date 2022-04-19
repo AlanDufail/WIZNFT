@@ -1,0 +1,28 @@
+/* import section */
+@import "favorite.css";
+@import "overlay.css";
+@import "filter.css";
+@import "nft.css";
+@import "page.css";
+@import "loading.css";
+@import "panier.css";
+
+:root{
+    --primary-color:#22254b;
+    --secondary-color: #07070e;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: auto;
+}
+
+
+.content{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
