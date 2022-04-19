@@ -1,4 +1,3 @@
-
 .nft {
     display: flex;
     flex-direction: column;
@@ -71,7 +70,10 @@
     bottom:0;
     background-color: #fff;
     padding: 1.5rem;
-    max-height: 50%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     transform:translateY(100%);
     transition:transform 0.3s ease-in;
 }
@@ -93,4 +95,45 @@
 
 .nft-info:hover .desc{
     transform:translateY(0)
+}
+
+.filters{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.btn_filter{
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 2px;
+    border: 2px solid #fff;
+    padding: 16px 32px;
+}
+
+.btn_filter:hover{
+    color: #11191f;
+}
+.btn_filter::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50px;
+    width: 0;
+    height: 100%;
+    background-color: #fff;
+    transform: skewX(35deg);
+    z-index: -1;
+    transition: width 1s;
+}
+.btn_filter:hover::before{
+    width: 150%;
+}
+.icon-fav{
+    position : absolute; 
+    top : 2vh; 
+    right : 2vh; 
+    width : 2vw;
+    cursor : pointer;
 }

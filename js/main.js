@@ -70,14 +70,30 @@ async function getNFT(url) {
 }
 
 function displayNFT(data) {
+
+
   data.forEach((nft) => {
     const { name, description, image_url, sales, creator, id } = nft;
     const nftElm = document.createElement("article");
     nftElm.classList.add("nft");
+
+    function descSize (word){
+      if (word.length > 110){
+        let wordSlice = word.slice(0, 110);
+        return wordSlice.concat('...');
+    
+      }else if(word == ""){
+        return word = `<p style="opacity : 0.5;">Not available</p> `;
+      }
+      else{
+        return word;
+      }
+    }
+
     nftElm.innerHTML = `
            <img class="nft_img loading"src="${
              image_url ? image_url : "./Assets/Image/image_not_found.png"
-           }" alt="${name}">
+           }" alt="${name}"><img src="./Assets/Image/star-outline.svg" class="icon-fav" onclick="addFav();"></img>
             <div class="nft-info">
               <h3 class="nft-title">${name ? name : "Item no longer available"}</h3>
               <div>
@@ -87,7 +103,7 @@ function displayNFT(data) {
 
               <div class="desc">
                 <h4>Description</h4>
-                <p>${description ? description : "No description available"}</p>
+                <p>${descSize(description)}</p>
                 <br/>
                 <button class="show-more" id="${id}">Show More</button
               </div>
@@ -305,3 +321,15 @@ async function initSite() {
 
 }
 window.addEventListener("DOMContentLoaded", initSite);
+
+
+// Meme problème que pour les favoris : Ne change l'icon seulement sur la première carte.
+//
+// function addFav() {
+//   if (document.querySelector(".icon-fav").src = "./Assets/Image/star-outline.svg"){
+//       document.querySelector(".icon-fav").src = "./Assets/Image/star-full.svg";
+//       console.log("test");
+//   } else if(document.querySelector(".icon-fav").src = "./Assets/Image/star-full.svg"){
+//       document.querySelector(".icon-fav").src == "./Assets/Image/star-outline.svg";
+//   }
+// }
