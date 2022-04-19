@@ -92,8 +92,8 @@ function displayNFT(data) {
 
     nftElm.innerHTML = `
            <img class="nft_img loading"src="${
-             image_url ? image_url : "./Assets/Image/image_not_found.png"
-           }" alt="${name}"><img src="./Assets/Image/star-outline.svg" class="icon-fav" onclick="addFav();"></img>
+             image_url ? image_url : "../Assets/Image/image_not_found.png"
+           }" alt="${name}"><img src="../Assets/Image/star-outline.svg" class="icon-fav" onclick="addFav();"></img>
             <div class="nft-info">
               <h3 class="nft-title">${name ? name : "Item no longer available"}</h3>
               <div>
