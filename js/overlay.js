@@ -1,6 +1,28 @@
 
+import nftCard from "./nftCard.js";
 //overlay function
 const overlayContent = document.querySelector('.overlay-content');
+const overlay = document.querySelector('.overlay');
+
+function createOverlay(){
+  nftCard.createElement(
+    "a",
+    {
+      href: "javascript:void(0)",
+      className: "closebtn",
+      innerHTML: "&times;",
+      events: [
+        {
+          type: "click",
+          action: closeNav,
+        }
+      ],
+    },
+    overlay,
+  )
+}
+
+
 
 function openOverlay(nft){
   let id = nft.id;
@@ -37,4 +59,5 @@ function closeNav() {
 export default {
   openOverlay,
   closeNav,
+  createOverlay,
 }

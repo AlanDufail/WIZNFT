@@ -112,11 +112,7 @@ function createElement(tag, prop, parentELM) {
   const elm = document.createElement(tag);
 
   for (const e in prop) {
-    if (e === "data") {
-      Object.keys(prop[e]).forEach((key) => {
-        elm.setAttribute(`data-${key}`, prop[e][key]);
-      });
-    } else if (e === "events") {
+    if (e === "events") {
       prop[e].forEach((event) => {
         const { type, action, params = [] } = event;
         let Params = [];
@@ -131,12 +127,7 @@ function createElement(tag, prop, parentELM) {
           action(...Params);
         });
       });
-    } else if (e === "style") {
-      Object.keys(prop[e]).forEach((key) => {
-        elm.style[key] = prop[e][key];
-      });
-      // TODO: add styles
-    } else {
+    }else {
       elm[e] = prop[e];
     }
   }
@@ -156,7 +147,7 @@ function descSize (word){
     return wordSlice.concat('...');
 
   }else if(word == ""){
-    return word = `<p style="opacity : 0.5;">Not available</p> `;
+    return word = `<p style="opacity : 0.5;">${constants.errorMessage[1]}</p> `;
   }
   else{
     return word;

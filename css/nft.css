@@ -47,7 +47,6 @@
 .nft-info .nft-creator{
     font-size: medium;
     text-align: center;
-    width: 200px;
     height: 16px;
 }
 
@@ -58,10 +57,17 @@
 
 .nft-info span.green{
     color:lightgreen;
+    text-align: center;
 }
 
 .nft-info span.red{
     color:red;
+    text-align: center;
+}
+.nft-stats {
+    display: flex;
+    flex-direction: column;
+
 }
 
 .nft-desc{
@@ -82,7 +88,7 @@
 
 .nft-desc .desc-title + .desc-paraph {
     color:#11191f;
-    margin-bottom: 16px;
+    font-size: smaller;
 }
 
 .show-more{
