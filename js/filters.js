@@ -1,5 +1,6 @@
 import constants from "./constants.js";
 import callsApi from "./calls-api.js";
+import nftCards from "./nftCard.js";
 
 //filter search function
 function createFilter() {
@@ -45,7 +46,6 @@ async function filterByName() {
   let myData = await callsApi.getNFT(
     `https://awesome-nft-app.herokuapp.com/search?q=${input}`
   );
-  console.log(...myData);
   for (let i = 0; i < myData.length; i++) {
     if (!myData[i].creator.username.toLowerCase().includes(input)) {
       //display none
@@ -55,11 +55,11 @@ async function filterByName() {
   }
   if(input.length == 0){
     callsApi.deleteNft();
-    callsApi.getNFT(baseData)
+    nftCards.createNFTcard(baseData);
   }
   else {
-    deleteNft();
-    await callsApi.getNFT(valeurSearch);
+    callsApi.deleteNft();
+    await nftCards.createNFTcard(valeurSearch);
   }
 }
 
@@ -76,4 +76,5 @@ async function filterBySales(page) {
 
 export default {
     createFilter,
+    filterByName
 }

@@ -16,29 +16,33 @@ let totalPages = 20;
 
 async function getNFT(url) {
   lazyLoading.lazyLoading();
-  await fetch(url) //1
-    .then((response) => response.json()) //2
-    .then((data) => {
-      deleteNft();
-      if (data.assets.length !== 0) {
-        nftCards.createNFTcard(data.assets);
-        if (currentPage <= 1) {
-          previous.classList.add("disabled");
-          next.classList.remove("disabled");
-        } else if (currentPage >= totalPages) {
-          previous.classList.remove("disabled");
-          next.classList.add("disabled");
+  return new Promise(async (success, failed) => { 
+    await fetch(url) //1
+      .then((response) => response.json()) //2
+      .then((data) => {
+        success(data.assets);
+        deleteNft();
+        console.log(data.assets.length)
+        if (data.assets.length !== 0) {
+          constants.content.innerHTML = '';
+          nftCards.createNFTcard(data.assets);
+          if (currentPage <= 1) {
+            prev.classList.add("disabled");
+            next.classList.remove("disabled");
+          } else if (currentPage >= totalPages) {
+            prev.classList.remove("disabled");
+            next.classList.add("disabled");
+          } else {
+            prev.classList.remove("disabled");
+            next.classList.remove("disabled");
+          }
+          constants.filters.scrollIntoView({ behavior: "smooth" });
         } else {
-          previous.classList.remove("disabled");
-          next.classList.remove("disabled");
+          constants.content.innerHTML = `<h1 class="no-results">No Results Found</h1>`;
         }
-        constants.filters.scrollIntoView({ behavior: "smooth" });
-      } else {
-        content.innerHTML = `<h1 class="no-results">${constants.errorMessage[2].label}</h1>`;
-      }
-    });
+      });
+  });
 }
-
 
 function deleteNft() {
   const allNfts = document.querySelectorAll(".nft");

@@ -8,7 +8,7 @@ import callsApi from "./calls-api.js";
 
 async function initSite() {
   filters.createFilter();  
-  await callsApi.getNFT(constants.BASE_URL);
-
+  let myData = await callsApi.getNFT(constants.BASE_URL);
+  filters.filterByName(myData);
 }
 window.addEventListener("DOMContentLoaded", initSite);
