@@ -22,7 +22,6 @@ async function getNFT(url) {
       .then((data) => {
         success(data.assets);
         deleteNft();
-        console.log(data.assets.length)
         if (data.assets.length !== 0) {
           constants.content.innerHTML = '';
           nftCards.createNFTcard(data.assets);

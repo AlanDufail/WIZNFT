@@ -38,7 +38,7 @@ function addSearchInput() {
 }
 function addSearchInputCreator() {
   const searchInput = document.createElement("input");
-  searchInput.id = "searchbar";
+  searchInput.id = "searchbarCreator";
   searchInput.name = "search";
   searchInput.placeholder = "Rechercher par creator...";
   constants.search.appendChild(searchInput);
@@ -78,11 +78,13 @@ async function filterByCreator() {
 //search  
   let baseData = await callsApi.getNFT(constants.BASE_URL);
   let valeurSearch = [];
-  let input = document.getElementById("searchbar").value;
+  let input = document.getElementById("searchbarCreator").value;
   input = input.toLowerCase();
   let myData = await callsApi.getNFT(
     `https://awesome-nft-app.herokuapp.com/search?q=${input}`
   );
+  console.log(input)
+
   for (let i = 0; i < myData.length; i++) {
     if (!myData[i].creator.username.toLowerCase().includes(input)) {
       //display none
