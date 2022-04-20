@@ -7,11 +7,11 @@ const filterSelect = [
     },
     {
       id: "1",
-      label: "search",
+      label: "Name",
     },
     {
       id: "2",
-      label: "Top creator",
+      label: "Creator",
     },
     {
       id: "3",
