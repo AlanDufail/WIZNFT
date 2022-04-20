@@ -1,3 +1,5 @@
+const navHome = document.querySelector('.nav-home');
+
 const route = (event) => {
     event = event || window.event;
     event.preventDefault();
@@ -8,8 +10,9 @@ const route = (event) => {
 
 
 const routes = {
-    "/" : "projet/pages/index.html",
-    "/shopping": "projet/pages/shopping.html"
+    "/" : "../pages/",
+    "/shopping": "../pages/shopping.html",
+    "/favorite": "../pages/favorite.html",
 }
 
 const handleRoute = async () => {
@@ -18,8 +21,12 @@ const handleRoute = async () => {
     const html = await fetch(route).then((data) => data.text());
     document.querySelector(".wrapper").innerHTML =  html; 
 };
-
+const addRouteClick = navHome.addEventListener("click",console.log(window.location.pathname));
 window.onpopstate = handleRoute;
 window.route = route;
 
-handleRoute();
+
+export default {
+    addRouteClick,
+    handleRoute,
+}

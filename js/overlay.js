@@ -26,11 +26,9 @@ function createOverlay(){
 
 function openOverlay(nft){
   let id = nft.id;
-  console.log('ici');
   fetch(`https://awesome-nft-app.herokuapp.com/nft/${id}`)
   .then((response) => response.json())
   .then(nftInfo => {
-    console.log(nftInfo);
     if(nftInfo){
       document.querySelector(".overlay").style.width = "100%";
       const content = `
