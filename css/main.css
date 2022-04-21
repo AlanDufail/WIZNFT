@@ -26,3 +26,11 @@ body{
     justify-content: center;
 }
 
+.contentFav{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+

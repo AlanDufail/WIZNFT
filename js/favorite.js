@@ -16,7 +16,6 @@ function addFavorite(nft) {
   let myObject = JSON.parse(localStorage.getItem('favorites'))
   nftCard.createNFTcard(myObject)
   console.log(myObject)
-//   constants.content.appendChild(iconFav);
 fetch(`https://awesome-nft-app.herokuapp.com/nft/${id}`)
   .then((response) => response.json())
   .then((nftInfo) => {

@@ -160,7 +160,11 @@ function createElement(tag, prop, parentELM) {
   if(parentELM){
       parentELM.appendChild(elm);
   }else{
-    constants.content.appendChild(elm);
+    if(location.pathname === "/projet/pages/favorite.html"){
+      constants.contentFav.appendChild(elm);
+    }else{
+      constants.content.appendChild(elm);
+    }
   }
 
   return elm;
