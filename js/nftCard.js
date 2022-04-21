@@ -31,6 +31,7 @@ function createNFTcard(data) {
                 {
                   type: "click",
                   action: favorite.addFavorite,
+                  params: [nft]
                 }
               ]
           },
