@@ -9,15 +9,15 @@ function addFavorite(nft) {
     let favorites = JSON.parse(localStorage.getItem('favorites')) || []
 
 
-    if(favorites.indexOf(id) == -1) {
-        favorites.push(id)
+    if(favorites.indexOf(nft) == -1) {
+        favorites.push(nft)
     } else {
         favorites.splice(index, 1);
     }
 
     localStorage.setItem('favorites', JSON.stringify(favorites))
-
-    console.log(JSON.parse(localStorage.getItem('favorites')))
+    let myObject = JSON.parse(localStorage.getItem('favorites'))
+    nftCard.createNFTcard(myObject)
 //   constants.content.appendChild(iconFav);
   fetch(`https://awesome-nft-app.herokuapp.com/nft/${id}`)
     .then((response) => response.json())

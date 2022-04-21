@@ -132,6 +132,135 @@ function createNFTcard(data) {
 }
 
 
+function createFavoritecard(data) {
+  data.forEach((nft) => {
+      const { name, description, image_url, sales, creator, id } = nft;
+      const  nftCard = createElement(
+          "article",
+          {
+            className: "nft",
+          },
+          constants.content,
+      );
+      createElement(
+          "img",
+          {
+              className: "nft_img",
+              src: `${image_url ? image_url : "../Assets/Image/image_not_found.png"}`,
+              alt: `${name}`
+          },
+          nftCard,
+      );
+      createElement(
+        "img",
+        {
+            className: "icon-fav",
+            src: "../Assets/Image/star-outline.svg",
+            id: `${id}`,
+            alt: constants.errorMessage[4].label,
+            events: [
+              {
+                type: "click",
+                action: favorite.addFavorite,
+                params: [nft]
+              }
+            ]
+        },
+        nftCard,
+    );
+      const nftInfo = createElement(
+          "div",
+          {
+              className: "nft-info",
+          },
+          nftCard,
+      );
+      createElement(
+          "h3",
+          {
+              className: "nft-title",
+              textContent: `${name ? name : constants.errorMessage[3].label}`
+          },
+          nftInfo,
+      );
+      const nftStats  = createElement(
+        "div",
+        {
+          className: "nft-stats",
+        },
+        nftInfo,
+      );
+      createElement(
+        "p",
+        {
+          className: "nft-creator",
+          textContent: `Creator: ${creator.username ? creator.username : constants.errorMessage[0].label}`,
+        },
+        nftStats,
+      );
+      createElement(
+        "span",
+        {
+          className: `${updateSalesColor(sales)}`,
+          textContent: `Sales: ${sales}`,
+        },
+        nftStats,
+      );
+      const nftDesc = createElement(
+        "div",
+        {
+          className: "nft-desc",
+        },
+        nftInfo,
+      );
+      createElement(
+        "h4",
+        {
+          className: "desc-title",
+          textContent: "Description"
+        },
+        nftDesc,
+      );
+      createElement(
+        "p",
+        {
+          className: "desc-paraph",
+          innerHTML:`${description ? descSize(description) : constants.errorMessage[1].label}<br/>`
+        },
+        nftDesc,
+      );
+      const btnWrapper = createElement(
+        "div",
+        {
+          className: "btn-wrapper",
+        },
+        nftDesc,
+      )
+      createElement(
+        "button",
+        {
+          className: "show-more",
+          id: `${id}`,
+          textContent: "Show more",
+        },
+        btnWrapper,
+      );
+      createElement(
+        "button",
+        {
+          className: "show-more",
+          id: `${id}`,
+          textContent: "Buy",
+        },
+        btnWrapper,
+      );
+  
+      document.getElementById(id).addEventListener("click", () => {
+        overlay.openOverlay(nft);
+      });
+    });
+}
+
 
 function createElement(tag, prop, parentELM) {
   const elm = document.createElement(tag);
