@@ -37,7 +37,7 @@ async function getNFT(url) {
           }
           constants.filters.scrollIntoView({ behavior: "smooth" });
         } else {
-          constants.content.innerHTML = `<h1 class="no-results">No Results Found</h1>`;
+          constants.content.innerHTML = `<h1 class="no-results">${constants.errorMessage[2].label}</h1>`;
         }
       });
   });

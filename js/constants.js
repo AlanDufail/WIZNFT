@@ -44,6 +44,10 @@ const errorMessage = [
   {
     id: "3",
     label: "Item no longer available"
+  },
+  {
+    id: "4",
+    label: "Add to favorite"
   }
 ]
 

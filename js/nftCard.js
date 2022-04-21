@@ -1,5 +1,6 @@
 import constants from "./constants.js";
 import overlay from "./overlay.js";
+import favorite from "./favorite.js";
 
 function createNFTcard(data) {
     data.forEach((nft) => {
@@ -25,7 +26,13 @@ function createNFTcard(data) {
           {
               className: "icon-fav",
               src: "../Assets/Image/star-outline.svg",
-              alt: `add to favorite`
+              alt: constants.errorMessage[4].label,
+              events: [
+                {
+                  type: "click",
+                  action: addFavorite,
+                }
+              ]
           },
           nftCard,
       );
@@ -107,6 +114,10 @@ function createNFTcard(data) {
       });
 }
 
+function addFavorite(){
+  console.log('ici')
+}
+
 
 function createElement(tag, prop, parentELM) {
   const elm = document.createElement(tag);
@@ -161,6 +172,7 @@ function updateSalesColor(sales) {
     return "green";
   }
 }
+
 
 export default {
   createElement,
