@@ -32,6 +32,7 @@ function createNFTcard(data) {
                 {
                   type: "click",
                   action: favorite.addFavorite,
+                  params: [nft]
                 }
               ]
           },
@@ -125,7 +126,6 @@ function createNFTcard(data) {
         );
     
         document.getElementById(id).addEventListener("click", () => {
-          console.log(id);
           overlay.openOverlay(nft);
         });
       });
