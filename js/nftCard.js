@@ -26,6 +26,7 @@ function createNFTcard(data) {
           {
               className: "icon-fav",
               src: "../Assets/Image/star-outline.svg",
+              id: `${id}`,
               alt: constants.errorMessage[4].label,
               events: [
                 {
