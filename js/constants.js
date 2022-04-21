@@ -22,6 +22,7 @@ const filters = document.querySelector(".filters");
 const search = document.querySelector(".search");
 const content = document.querySelector(".content");
 const contentFav = document.querySelector(".contentFav");
+const contentCart = document.querySelector(".contentCart");
 
 // TO MODIFY
 let currentPage = 1;
@@ -63,4 +64,5 @@ export default {
   nextPage,
   prevPage,
   contentFav,
+  contentCart,
 };

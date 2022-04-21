@@ -1,5 +1,4 @@
-import constants from "./constants.js";
-import callsApi from "./calls-api.js";
+
 import nftCard from "./nftCard.js";
 
 function addFavorite(nft) {
