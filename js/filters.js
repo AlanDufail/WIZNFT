@@ -61,11 +61,11 @@ function addSearchInputCreator() {
 
 async function filterByName() {
   //search  
-  let baseData = await callsApi.getNFTs(constants.BASE_URL);
+  let baseData = await callsApi.getNFT(constants.BASE_URL);
   let valeurSearch = [];
   let input = document.getElementById("searchbar").value;
   input = input.toLowerCase();
-  let myData = await callsApi.getNFTs(
+  let myData = await callsApi.getNFT(
     `https://awesome-nft-app.herokuapp.com/search?q=${input}`
   );
   console.log(myData)
@@ -88,11 +88,11 @@ async function filterByName() {
 
 async function filterByCreator() {
 //search  
-  let baseData = await callsApi.getNFTs(constants.BASE_URL);
+  let baseData = await callsApi.getNFT(constants.BASE_URL);
   let valeurSearch = [];
   let input = document.getElementById("searchbarCreator").value;
   input = input.toLowerCase();
-  let myData = await callsApi.getNFTs(
+  let myData = await callsApi.getNFT(
     `https://awesome-nft-app.herokuapp.com/search?q=${input}`
   );
   console.log(input)
@@ -116,14 +116,12 @@ async function filterByCreator() {
 
 async function filterBySales(page) {
     callsApi.deleteNft();
-  await callsApi.getNFTs(
+  await callsApi.getNFT(
     `https://awesome-nft-app.herokuapp.com/?page=${page}&sales=true`
   );
 }
 
 export default {
     createFilter,
-    filterByName,
-    filterByCreator,
-    filterBySales,
+    filterByName
 }

@@ -1,7 +1,7 @@
 import constants from "./constants.js";
 import lazyLoading from "./lazyLoader.js";
 import nftCards from "./nftCard.js";
-import filters from "./filters.js";
+
 
 
 const previous = document.querySelector("#prev");
@@ -14,7 +14,7 @@ let prevPage = 0;
 let totalPages = 20;
 
 
-async function getNFTs(url) {
+async function getNFT(url) {
   lazyLoading.lazyLoading();
   return new Promise(async (success, failed) => { 
     await fetch(url) //1
@@ -53,7 +53,7 @@ function deleteNft() {
 }
 async function selectPage(page) {
   deleteNft();
-  await getNFTs(`https://awesome-nft-app.herokuapp.com/?page=${page}`);
+  await getNFT(`https://awesome-nft-app.herokuapp.com/?page=${page}`);
 }
 
 previous.addEventListener("click", () => {
@@ -76,6 +76,6 @@ next.addEventListener("click", () => {
 });
 
 export default {
-  getNFTs,
+  getNFT,
   deleteNft,
 };
