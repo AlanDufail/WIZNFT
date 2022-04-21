@@ -30,7 +30,7 @@ function createNFTcard(data) {
               events: [
                 {
                   type: "click",
-                  action: addFavorite,
+                  action: favorite.addFavorite,
                 }
               ]
           },
@@ -70,7 +70,7 @@ function createNFTcard(data) {
           "span",
           {
             className: `${updateSalesColor(sales)}`,
-            textContent: `Sale's number: ${sales}`,
+            textContent: `Sales: ${sales}`,
           },
           nftStats,
         );
@@ -97,6 +97,13 @@ function createNFTcard(data) {
           },
           nftDesc,
         );
+        const btnWrapper = createElement(
+          "div",
+          {
+            className: "btn-wrapper",
+          },
+          nftDesc,
+        )
         createElement(
           "button",
           {
@@ -104,7 +111,16 @@ function createNFTcard(data) {
             id: `${id}`,
             textContent: "Show more",
           },
-          nftDesc,
+          btnWrapper,
+        );
+        createElement(
+          "button",
+          {
+            className: "show-more",
+            id: `${id}`,
+            textContent: "Buy",
+          },
+          btnWrapper,
         );
     
         document.getElementById(id).addEventListener("click", () => {
@@ -114,9 +130,6 @@ function createNFTcard(data) {
       });
 }
 
-function addFavorite(){
-  console.log('ici')
-}
 
 
 function createElement(tag, prop, parentELM) {
@@ -153,8 +166,8 @@ function createElement(tag, prop, parentELM) {
 }
 
 function descSize (word){
-  if (word.length > 60){
-    let wordSlice = word.slice(0, 60);
+  if (word.length > 55){
+    let wordSlice = word.slice(0, 55);
     return wordSlice.concat('...');
 
   }else if(word == ""){

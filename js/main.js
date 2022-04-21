@@ -6,15 +6,12 @@ import router from "./router.js";
 
 
 //init site
-
 async function initSite() {
-  //router.addRouteClick;
-  //router.handleRoute();
+
   filters.createFilter();  
   let myData = await callsApi.getNFT(constants.BASE_URL);
   filters.filterByName(myData);
   overlay.createOverlay();
-  
 
 }
 window.addEventListener("DOMContentLoaded", initSite);
