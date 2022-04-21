@@ -12,11 +12,11 @@ function createFilter() {
     btn.innerText = filter.label;
     if (filter.id == "1") {
       btn.classList.add("btn_filter");
-      btn.addEventListener("click", addSearchInput, { once: true });
+      btn.addEventListener("click", addSearchInput);
     }
     if (filter.id == "2") {
       btn.classList.add("btn_filter");
-      btn.addEventListener("click", addSearchInputCreator, {once: true});
+      btn.addEventListener("click", addSearchInputCreator);
     }
     if (filter.id == "3") {
       btn.classList.add("btn_filter");
@@ -28,6 +28,12 @@ function createFilter() {
 }
 
 function addSearchInput() {
+  if(document.querySelector("input[name=search]")) {
+    document.getElementById("searchbar").remove(); 
+  }
+  if(document.querySelector("input[name=searchbar]")) {
+    document.getElementById("searchbarCreator").remove(); 
+  }
   const searchInput = document.createElement("input");
   searchInput.id = "searchbar";
   searchInput.name = "search";
@@ -37,9 +43,15 @@ function addSearchInput() {
   searchInput.addEventListener("keyup", filterByName);
 }
 function addSearchInputCreator() {
+  if(document.querySelector("input[name=searchbar]")) {
+    document.getElementById("searchbarCreator").remove(); 
+  }
+  if(document.querySelector("input[name=search]")) {
+    document.getElementById("searchbar").remove(); 
+  }
   const searchInput = document.createElement("input");
   searchInput.id = "searchbarCreator";
-  searchInput.name = "search";
+  searchInput.name = "searchbar";
   searchInput.placeholder = "Rechercher par creator...";
   constants.search.appendChild(searchInput);
 
